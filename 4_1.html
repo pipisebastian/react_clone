@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div id = "root"></div>
+    </body>
+    <script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type = "text/babel">
+        const root = document.getElementById("root") 
+        
+        function Btn({banana , onClick}){
+            //props는 object이기 때문에, 
+            //(props)로 받아서 props.banana를 쓰는게 아니라
+            //({banana}) 로 바로 받을 수 있음!
+
+            console.log(banana, " 실행!")
+            //2. 여기보면 
+
+            return (
+                <button 
+                onClick = {onClick}
+                style={{
+                backgroundColor: "teal",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: "10px",
+                marginRight: "5px",
+                fontSize: 40
+              }}>
+
+              {banana}
+            
+            </button>
+            )
+            
+        }
+        
+        const MemoBtn = React.memo(Btn);
+        //3. 이젠 props가 바뀌는것만 렌더링 됨!!
+
+        function App (){
+            const [value, setValue] = React.useState("save");
+            const changeValue = (event)=>{
+                setValue("revert change")
+            }
+            return (                    
+                <div>  
+                    <MemoBtn banana = {value} onClick = {changeValue}/>                 
+                    <MemoBtn banana = "continue"/> 
+
+                </div> 
+                //Btn에 onClick은 내가 props로 넘겨준거지,
+                //<button onClick = ~></button>의 html에서 onClick(미리 정의되어 있음)이 아님!!
+
+                //2. 버튼 클릭 -> onClick이 Btn으로 넘겨가고, Btn안에서 onClick, 즉 changeValue가 실행되며
+                //setValue가 실행, 즉! App컴포넌트를 리렌더링!! 근데,Apd을 실행하기땜에, Btn 컴포넌트 2개가 모두
+                //리렌더링 됨. 즉 revert change 실행!, 후에 continue change 실행! 2개다 뜸!!
+                //낭비!!
+
+                //3.우린 리렌더링을 막을 수가 있음!! (memo)
+                //어떨때? props가 바뀌지 않을때!! 즉 2번째 Btn은 안바뀌므로
+            )
+            
+        }
+            
+        
+        // props : 부모컴포넌트로부터 자식컴포넌트에 데이터를 보냄
+        //App의 데이터를 BTn으로 보냄! banana로!! arg보내는거랑 같음
+        ReactDOM.render(<App/>,root)
+        
+    </script>
+</html>
+

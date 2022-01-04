@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div id = "root"></div>
+    </body>
+    <script src = "https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src = "https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+    <!-- props type 알려줌!! script-->
+    <script type = "text/babel">
+        const root = document.getElementById("root") 
+        
+        function Btn({banana , fontSize = 12}){
+            //isRequired이 없는 fontSize는 만약 없을경우, 디폴트로 14
+            
+            return (
+                <button 
+                style={{
+                backgroundColor: "teal",
+                color: "white",
+                padding: "10px 20px",
+                borderRadius: "10px",
+                marginRight: "5px",
+                fontSize: fontSize
+              }}>
+
+              {banana}
+            
+            </button>
+            )
+            
+        }
+        
+        //props type 검사!
+        //isRequired은 필수로 있어야 하는 props!!
+        Btn.propTypes = {
+            banana: PropTypes.string.isRequired,
+            fontSize : PropTypes.number,
+        }
+        function App (){      
+            return (
+                //propsType 정의!!                    
+                <div>  
+                    <Btn banana = "save change" fontSize ={48} />                 
+                    <Btn banana = "invert change"  /> 
+                </div>
+                //이제, 에러 뜸!
+            )    
+        }
+            
+       ReactDOM.render(<App/>,root)
+        
+    </script>
+</html>
+
