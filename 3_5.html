@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div id = "root"></div>
+    </body>
+    <script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type = "text/babel">
+  
+        const root = document.getElementById("root") 
+   
+        function App (){
+            //react에선 for, class 못씀@
+            //그래서 htmlFor로 바꿔줘야함!!
+            const [minutes, setMinutes] = React.useState();
+            const onChange=(event)=>{
+                //target은 우리가 바꾼 input의미
+                setMinutes(event.target.value)
+                //{minute}업데이트 해줌!
+            }
+            return (  
+                <div>
+                    
+                    <h1>SUPER CONVERTER</h1>
+                    <label htmlFor = "minute">Minute</label>
+                    <input value = {minutes} 
+                        id = "minute"
+                        placeholder="Minutes" 
+                        type = "number"
+                        onChange = {onChange}
+                        //여기 value는 스스로 업데이트!!
+                    />
+                    <h4>we want to {minutes}</h4>
+                    <label htmlFor = "hour">Hour</label>
+                    <input id = "hour" placeholder="Hours" type = "number"/>
+                </div> 
+            )
+        }
+            
+        
+            
+        ReactDOM.render(<App/>,root)
+        
+    </script>
+</html>
+

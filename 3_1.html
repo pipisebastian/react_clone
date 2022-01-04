@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div id = "root"></div>
+    </body>
+    <script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type = "text/babel">
+  
+        const root = document.getElementById("root") 
+   
+        //안 좋은 방식 => 3_0에서 리렌더하는걸 계속 정의해야 했음.
+        //좋은 방식 =>
+        
+        function App (){
+            const data = React.useState(0);
+            //data는 배열 [0,f] 로 이루어져 있음!!
+            //첫번째 값은 변수(counter), 두번째는 함수(counterup)
+            
+            //변수 가져올때 a = data[0] 이 아니라.
+            const [counter, modifier] = data;//배열에서 변수 할당
+            const counterup = () => {
+                modifier(counter + 1);
+
+                //modifier함수 안에서는 다음과 같이 동작함!!
+                /*modifier(55555);를 한다고 치면
+
+                counter = 55555; 값 바꿔주고
+                ReactDOM.render(<App/>,root) 렌더해주고
+                */
+            }
+            return (  
+                <div>
+                    <h3>total click: {counter}</h3>
+                    <button onClick={counterup}>
+                    CLICK ME!
+                    </button>
+                </div> 
+            )
+        }
+            
+        
+            
+        ReactDOM.render(<App/>,root)
+        
+    </script>
+</html>
+

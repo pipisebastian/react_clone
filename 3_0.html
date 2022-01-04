@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div id = "root"></div>
+    </body>
+    <script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type = "text/babel">
+  
+        const root = document.getElementById("root") 
+   
+        //안 좋은 방식
+        let counter = 0;
+           
+        function countup(){
+            counter = counter + 1 ;
+            rerender()//2.리렌더
+        }
+
+        function rerender(){
+            ReactDOM.render(<Container/>,root)
+            //2. 이렇게!! 리렌더 해주는거임!!
+        }
+        const Container = ()=>(
+            <div>
+                <h3>total click: {counter}</h3>
+                <button onClick={countup}>
+
+                CLICK ME!
+                </button>
+            </div>
+        )
+
+        /* 위에 방식 함수형이랑 같은거임!
+        function Container() {return ( 
+            <div>
+                <h3>total click: {counter}</h3>
+                <button onClick={countup}>
+
+                CLICK ME!
+                </button>
+            </div>
+        )}
+        */
+            
+        ReactDOM.render(<Container/>,root)
+        //1. 이 코드는 페이지가 로드될때 렌더링됨.
+        //그러니까 이게 실행될때 continer컴포넌트가 실행되는데
+        //이때 counter는 0.
+        //그렇기때문에 counter를 업데이트 시켜도
+        //리렌더링을 안하기때문에 그대로 0이 되는거임..
+
+        //즉 우리가 할건 카운터를 업데이트할때마다
+        //render를 시켜줘야함!!(ReactDOM.render(<Container/>,root))
+        
+
+        //근데 보면,  바뀐 부분만(Container컴포넌트 ) 리렌더 해줄거임!!!
+        //컴포넌트를 다 렌더링 하는거지만
+        //실제론 html에서 {counter}얘만 리렌더링 해줌!! 바뀐 부분만!!!!
+       // 바뀐 부분만 새로 생성하도록!! 리액트는 똑똑해!!
+    </script>
+</html>
+

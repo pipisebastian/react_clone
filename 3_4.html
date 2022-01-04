@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div id = "root"></div>
+    </body>
+    <script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type = "text/babel">
+  
+        const root = document.getElementById("root") 
+   
+        function App (){
+            const data = React.useState(0);
+            const [counter, modifier] = data;//배열에서 변수 할당
+            const counterup = () => {
+                modifier(counter + 1);
+                modifier((counter) => counter +1)
+                //같은 방식. 밑에(함수)가 더 안전.
+                //함수가 뭘 return하던지 그것이 새로운 state가 됨
+            }
+            return (  
+                <div>
+                    <h3>total click: {counter}</h3>
+                    <button onClick={counterup}>
+                    CLICK ME!
+                    </button>
+                </div> 
+            )
+        }
+            
+        
+            
+        ReactDOM.render(<App/>,root)
+        
+    </script>
+</html>
+
